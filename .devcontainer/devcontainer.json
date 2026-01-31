@@ -1,0 +1,39 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+  "name": "Untitled Node.js project",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "node",
+  // "features": {
+  //   "ghcr.io/devcontainers-extra/features/pnpm:2": {}
+  // },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true
+    }
+  },
+  "mounts": [
+    "type=bind,source=${localEnv:HOME}/.config/devcontainer/zshrc,target=/home/node/.zshrc,readonly",
+    "type=volume,source=pnpm-store,target=/pnpm-store",
+    "type=volume,source=node-local,target=/home/node/.local"
+  ],
+  "containerEnv": {
+    // pnpm が store をここに作るように固定（.npmrcでもOK）
+    "PNPM_STORE_DIR": "/pnpm-store"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "christian-kohler.path-intellisense",
+        "andrewmcodes.tailwindcss-extension-pack",
+        "formulahendry.auto-close-tag",
+        "csstools.postcss",
+        "Asuka.insertnumbers",
+        "bradlc.vscode-tailwindcss",
+        "formulahendry.auto-rename-tag"
+      ]
+    }
+  },
+  "postCreateCommand": "sh .devcontainer/postCreate.sh"
+}
