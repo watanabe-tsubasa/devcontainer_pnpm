@@ -14,12 +14,11 @@
     }
   },
   "mounts": [
-    "type=bind,source=${localEnv:HOME}/.config/devcontainer/zshrc,target=/home/node/.zshrc,readonly",
     "type=volume,source=pnpm-store,target=/pnpm-store",
-    "type=volume,source=node-local,target=/home/node/.local"
+    "type=volume,source=node-local,target=/home/node/.local",
+    "type=volume,source=node-zshrc,target=/home/node/.zshrc-store"
   ],
   "containerEnv": {
-    // pnpm が store をここに作るように固定（.npmrcでもOK）
     "PNPM_STORE_DIR": "/pnpm-store"
   },
   "customizations": {
