@@ -1,0 +1,18 @@
+# .devcontainer/zshrc
+
+# Pure prompt
+fpath+=("$(npm root -g)/pure-prompt")
+autoload -U promptinit
+promptinit
+prompt pure
+
+# pnpm store
+export PNPM_STORE_DIR=/pnpm-store
+
+# Common aliases
+alias ll='ls -la'
+alias pn='pnpm'
+alias dc='devcontainer'
+
+# Helpful container marker
+export DEVCONTAINER=true

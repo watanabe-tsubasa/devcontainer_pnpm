@@ -1,19 +1,21 @@
 #!/bin/sh
 set -eu
 
-# volume 初回で ~/.local が root 所有になりがちなので直す
-sudo mkdir -p /home/node/.local
-sudo chown -R node:node /home/node/.local
+# Ensure writable user dirs
+sudo mkdir -p /home/node/.local /pnpm-store
+sudo chown -R node:node /home/node/.local /pnpm-store
 
-# pnpm（package.json があるときだけ）
-pnpm -v
+# Install devcontainer-specific zshrc
+cp .devcontainer/zshrc /home/node/.zshrc
+sudo chown node:node /home/node/.zshrc
+
+# Prepare pnpm
+corepack enable
+
+# Install dependencies if package.json exists
 if [ -f package.json ]; then
+  pnpm -v
   pnpm install
 else
   echo "skip: package.json not found in $(pwd)"
-fi
-
-# claude（なければ入れる）
-if ! command -v claude >/dev/null 2>&1; then
-  curl -fsSL https://claude.ai/install.sh | bash
 fi
